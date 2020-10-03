@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Homer</string>
+    <string name="username">Username</string>
+    <string name="chats">Chat</string>
+    <string name="settings">Settings</string>
+    <string name="account_settings">Account Settings</string>
 </resources>
