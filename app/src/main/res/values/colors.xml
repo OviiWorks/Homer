@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#444444</color>
     <color name="colorAccent">#000</color>
     <color name="colorProfile">#000</color>
+    <color name="colorHomerBlue">#3f9bd6</color>
+
 </resources>
