@@ -2,8 +2,13 @@
 
 package com.example.homer
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -13,6 +18,7 @@ import com.example.homer.fragments.ChatFragment
 import com.example.homer.fragments.SearchFragment
 import com.example.homer.fragments.SettingsFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +40,30 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = viewPagerAdapter
         tabLayout.setupWithViewPager(viewPager)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_logout, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+         when (item.getItemId()) {
+            R.id.menu_logout -> {
+                FirebaseAuth.getInstance().signOut()
+
+                val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+                return true
+            }
+
+        }
+        return false
+    }
+
+
     internal class ViewPagerAdapter(fragmentManager:FragmentManager) :
             FragmentPagerAdapter(fragmentManager)
     {
