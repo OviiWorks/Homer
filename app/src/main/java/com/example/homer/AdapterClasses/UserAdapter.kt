@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class UserAdapter (
-    mathContext: Context,
+    mContext: Context,
     mUsers: List<Users>,
     isChatCheck: Boolean
 ) : RecyclerView.Adapter<UserAdapter.ViewHolder?>()
@@ -30,7 +30,7 @@ class UserAdapter (
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_search_item_layout, viewGroup.false)
+        val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_search_item_layout, viewGroup, false)
         return UserAdapter.ViewHolder(view)
     }
 
