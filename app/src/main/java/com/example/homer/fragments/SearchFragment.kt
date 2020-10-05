@@ -44,7 +44,7 @@ class SearchFragment :Fragment() {
         mUsers = ArrayList()
         retrieveAllUsers()
 
-        searchEditText.addTextChangedListener(object : TextWatcher
+        searchEditText!!.addTextChangedListener(object : TextWatcher
         {
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
 

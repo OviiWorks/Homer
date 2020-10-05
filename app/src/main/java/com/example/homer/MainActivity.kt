@@ -6,16 +6,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.homer.ModelClasses.Users
-import com.example.homer.fragments.ChatFragment
+import com.example.homer.fragments.ChatsFragment
 import com.example.homer.fragments.SearchFragment
 import com.example.homer.fragments.SettingsFragment
 import com.google.android.material.tabs.TabLayout
@@ -43,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
 
-        viewPagerAdapter.addFragment(ChatFragment(),   "Chats")
+        viewPagerAdapter.addFragment(ChatsFragment(), "Chats")
         viewPagerAdapter.addFragment(SearchFragment(),  "Search")
         viewPagerAdapter.addFragment(SettingsFragment(), "Settings")
 
