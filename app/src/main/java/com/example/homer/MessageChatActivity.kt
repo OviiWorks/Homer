@@ -63,7 +63,7 @@ class MessageChatActivity : AppCompatActivity()
             .reference
             .child("Users")
             .child(userIdVisit)
-        reference.addValueEventListener(object : ValueEventListener {
+        reference!!.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(p0: DataSnapshot)
             {
@@ -101,6 +101,8 @@ class MessageChatActivity : AppCompatActivity()
             intent.type = "image/*"
             startActivityForResult(Intent.createChooser(intent,"YES YES YES Show me something !"), 438)
         }
+
+        seenMessage(userIdVisit)
     }
 
 
@@ -262,6 +264,6 @@ class MessageChatActivity : AppCompatActivity()
     override fun onPause() {
         super.onPause()
 
-        reference
+        reference!!.removeEventListener(seenListener!!)
     }
 }
