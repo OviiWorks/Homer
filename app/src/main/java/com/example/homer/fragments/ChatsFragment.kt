@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.homer.AdapterClasses.UserAdapter
 import com.example.homer.ModelClasses.ChatList
 import com.example.homer.ModelClasses.Users
+import com.example.homer.Notifications.Token
 import com.example.homer.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -17,6 +18,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.iid.FirebaseInstanceId
 
 
 class ChatsFragment : Fragment() {
@@ -60,7 +62,16 @@ class ChatsFragment : Fragment() {
             }
         })
 
+
+        updatetoken(FirebaseInstanceId.getInstance().token)
         return view
+    }
+
+    private fun updatetoken(token: String?)
+    {
+        val ref = FirebaseDatabase.getInstance().reference.child("Tokens")
+        val token1 = Token (token!!)
+        ref.child(firebaseUser!!.uid).setValue(token1)
     }
 
     private fun retrieveChatList(){
