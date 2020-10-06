@@ -1,11 +1,17 @@
 package com.example.homer.AdapterClasses
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.homer.MainActivity
+import com.example.homer.MessageChatActivity
 import com.example.homer.ModelClasses.Users
 import com.example.homer.R
 import com.squareup.picasso.Picasso
@@ -44,6 +50,28 @@ class UserAdapter (
 
         holder.userNameTxt.text = user!!.getUserName()
         Picasso.get().load(user.getProfile()).placeholder(R.drawable.profile).into(holder.profileImageView)
+
+        holder.itemView.setOnClickListener {
+            val options = arrayOf<CharSequence>(
+                "Send Message",
+                "Visit Profile"
+            )
+            val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
+            builder.setTitle("Hmm.. interesting...")
+            builder.setItems(options, DialogInterface.OnClickListener { dialog, which ->
+                if (which == 0)
+                {
+                    val intent = Intent(mContext, MessageChatActivity::class.java)
+                    intent.putExtra("visit_id", user.getUID())
+                    mContext.startActivity(intent)
+                }
+                if (which == 1)
+                {
+
+                }
+            })
+            builder.show()
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

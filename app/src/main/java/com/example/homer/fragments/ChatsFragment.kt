@@ -5,11 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.homer.AdapterClasses.UserAdapter
+import com.example.homer.ModelClasses.ChatList
+import com.example.homer.ModelClasses.Users
 import com.example.homer.R
 
 
 class ChatsFragment : Fragment() {
 
+    private  var userAdapter: UserAdapter? = null
+    private  var mUsers: List<Users>? = null
+    private  var usersChatList: List<ChatList>? = null
+
+
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -18,4 +27,7 @@ class ChatsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_chats, container, false)
     }
 
+    private fun retrieveChatList(){
+
+    }
 }
