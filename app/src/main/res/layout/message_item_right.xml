@@ -44,9 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:textColor="@android:color/white"
-            android:text="seen"
             android:layout_marginStart="6dp"
-            android:layout_below="@+id/show_text_message">
+            android:layout_below="@+id/show_text_message"
+            android:visibility="gone">
         </TextView>
 
     </RelativeLayout>

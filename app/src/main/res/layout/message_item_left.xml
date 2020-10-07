@@ -19,8 +19,7 @@
         android:textSize="18sp"
         android:padding="8dp"
         android:textColor="@android:color/white"
-        android:background="@drawable/background_left"
-        android:text="test">
+        android:background="@drawable/background_left">
     </TextView>
     <ImageView
         android:id="@+id/left_image_view"
@@ -34,10 +33,10 @@
         android:id="@+id/text_seen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="seen"
         android:textColor="@android:color/white"
         android:layout_marginStart="6dp"
-        android:layout_below="@+id/show_text_message">
+        android:layout_below="@+id/show_text_message"
+        android:visibility="gone">
     </TextView>
 
 </RelativeLayout>

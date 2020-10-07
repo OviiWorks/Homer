@@ -1,21 +1,25 @@
 package com.example.homer.AdapterClasses
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.homer.ModelClasses.Chat
+import com.example.homer.ViewFullImageActivity
 import com.example.homer.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.message_item_left.view.*
 
 class ChatAdapter (
     mContext: Context,
@@ -67,6 +71,30 @@ class ChatAdapter (
                 holder.show_text_message!!.visibility = View.GONE
                 holder.right_image_view!!.visibility = View.VISIBLE
                 Picasso.get().load(chat.getUrl()).into(holder.right_image_view)
+
+                holder.right_image_view!!.setOnClickListener {
+                    val options = arrayOf<CharSequence>(
+                        "View Full Image",
+                        "Delete Image",
+                        "Cancel"
+                    )
+                    var builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
+                    builder.setTitle("You have only one option ! Choose !")
+                    builder.setItems(options, DialogInterface.OnClickListener{
+                        dialog, witch ->
+                        if (witch == 0)
+                        {
+                            val intent = Intent(mContext, ViewFullImageActivity::class.java)
+                            intent.putExtra("url",chat.getUrl())
+                            mContext.startActivity(intent)
+                        }
+                        else if (witch == 1)
+                        {
+                            deleteSentMessage(position,holder)
+                        }
+                    })
+                    builder.show()
+                }
             }
             //image message left
             else if (!chat.getSender().equals(firebaseUser!!.uid))
@@ -74,12 +102,50 @@ class ChatAdapter (
                 holder.show_text_message!!.visibility = View.GONE
                 holder.left_image_view!!.visibility = View.VISIBLE
                 Picasso.get().load(chat.getUrl()).into(holder.left_image_view)
+
+                holder.left_image_view!!.setOnClickListener {
+                    val options = arrayOf<CharSequence>(
+                        "View Full Image",
+                        "Cancel"
+                    )
+                    var builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
+                    builder.setTitle("You have only one option ! Choose !")
+                    builder.setItems(options, DialogInterface.OnClickListener{
+                            dialog, witch ->
+                        if (witch == 0)
+                        {
+                            val intent = Intent(mContext, ViewFullImageActivity::class.java)
+                            intent.putExtra("url",chat.getUrl())
+                            mContext.startActivity(intent)
+                        }
+                    })
+                    builder.show()
+                }
             }
         }
         //text messages
         else
         {
             holder.show_text_message!!.text = chat.getMessage()
+            if(firebaseUser!!.uid == chat.getSender())
+            {
+                holder.show_text_message!!.setOnClickListener {
+                    val options = arrayOf<CharSequence>(
+                        "Delete Message",
+                        "Cancel"
+                    )
+                    var builder: AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
+                    builder.setTitle("You have only one option ! Choose !")
+                    builder.setItems(options, DialogInterface.OnClickListener{
+                            dialog, witch ->
+                        if (witch == 0)
+                        {
+                            deleteSentMessage(position,holder)
+                        }
+                    })
+                    builder.show()
+                }
+            }
         }
         //sent and seen message
         if (position == mChatList.size-1)
@@ -140,5 +206,22 @@ class ChatAdapter (
             //message item left
             0
         }
+    }
+
+    private fun deleteSentMessage(position: Int,holder:ChatAdapter.ViewHolder)
+    {
+        val ref= FirebaseDatabase.getInstance().reference.child("Chats")
+            .child(mChatList.get(position).getMessageID()!!)
+            .removeValue()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful)
+                {
+                    Toast.makeText(holder.itemView.context,"Is stays between me and you.", Toast.LENGTH_LONG).show()
+                }
+                else
+                {
+                    Toast.makeText(holder.itemView.context,"You cant hide it from me.", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 }
