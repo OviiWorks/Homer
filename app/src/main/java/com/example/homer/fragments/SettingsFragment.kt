@@ -89,10 +89,13 @@ class SettingsFragment : Fragment() {
             setSocialLinks()
         }
         view.logout.setOnClickListener {
-//            FirebaseAuth.getInstance().signOut()
-//            val intent = Intent(this@SettingsFragment, WelcomeActivity::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-//            startActivity(intent) 
+           FirebaseAuth.getInstance().signOut()
+
+            val myIntent = Intent(activity,WelcomeActivity::class.java)
+            myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(myIntent)
+
+
 // japabeidz logout
         }
 
